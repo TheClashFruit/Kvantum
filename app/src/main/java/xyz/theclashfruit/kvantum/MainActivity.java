@@ -64,10 +64,9 @@ public class MainActivity extends AppCompatActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 editTextUrl.setText(url);
 
-                try {
-                    webView.getCertificate();
+                if(KvengineUtil.sslCheck(view)) {
                     imageViewLock.setColorFilter(0xFF4CAF50);
-                } catch (Exception error) {
+                } else {
                     imageViewLock.setColorFilter(0xFFF44336);
                 }
 
