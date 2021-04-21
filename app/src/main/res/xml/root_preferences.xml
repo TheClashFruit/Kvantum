@@ -1,0 +1,11 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="Browser">
+        <EditTextPreference
+            android:key="edit_text_preference_1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="ex.: https://google.com/search?q=%1"
+            android:title="Search Engine Url" />
+    </PreferenceCategory>
+</PreferenceScreen>

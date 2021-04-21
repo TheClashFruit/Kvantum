@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="engines">
+        <item>Google</item>
+        <item>DuckDuckGo</item>
+        <item>Bing</item>
+        <item>Start Page</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="engines_values">
+        <item>google</item>
+        <item>duckduckgo</item>
+        <item>bing</item>
+        <item>start_page</item>
+        <item>other</item>
+    </string-array>
+</resources>

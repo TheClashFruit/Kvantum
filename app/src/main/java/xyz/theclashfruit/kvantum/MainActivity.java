@@ -2,6 +2,7 @@ package xyz.theclashfruit.kvantum;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -68,43 +69,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        editTextUrl.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    webView.loadUrl(editTextUrl.getText().toString());
-                    return true;
-                }
-                return false;
+        editTextUrl.setOnKeyListener((v, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                webView.loadUrl(editTextUrl.getText().toString());
+                return true;
             }
+            return false;
         });
 
-        imageViewMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(MainActivity.this, imageViewMore);
+        imageViewMore.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(MainActivity.this, imageViewMore);
 
-                Menu menu = popup.getMenu();
-                menu.add("Bookmarks");
-                menu.add("History");
-                menu.add("Downloads");
-                menu.add("Desktop Site").setCheckable(true);
-                menu.add("Settings");
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getTitle().toString()) {
-                            case "Bookmarks":
+            Menu menu = popup.getMenu();
+            menu.add("Bookmarks");
+            menu.add("History");
+            menu.add("Downloads");
+            menu.add("Desktop Site").setCheckable(true);
+            menu.add("Settings");
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getTitle().toString()) {
+                    case "Bookmarks":
 
-                                return true;
-                            case "History":
+                        return true;
+                    case "Settings":
+                        Intent i1 = new Intent();
+                        i1.setClass(MainActivity.this, SettingsActivity.class);
+                        startActivity(i1);
 
-                                return true;
-                            default: return false;
-                        }
-                    }
-                });
+                        return true;
+                    default: return false;
+                }
+            });
 
-                popup.show();
-            }
+            popup.show();
         });
     }
 }
