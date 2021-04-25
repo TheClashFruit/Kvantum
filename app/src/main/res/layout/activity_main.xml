@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:id="@+id/linearUrl"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#616161"
@@ -30,10 +30,10 @@
                 android:id="@+id/imageViewLock"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="4dp"
-                android:layout_weight="0"
+                android:layout_marginEnd="4dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_lock" />
+                app:srcCompat="@drawable/ic_lock"
+                android:contentDescription="@string/https_lock" />
 
             <EditText
                 android:id="@+id/editTextUrl"
@@ -41,31 +41,33 @@
                 android:layout_height="match_parent"
                 android:background="#00FFFFFF"
                 android:ems="10"
-                android:hint="Enter Url..."
-                android:inputType="textPersonName"
+                android:hint="@string/enter_url"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#A3FFFFFF"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="TextFields"
+                android:autofillHints="" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/imageViewTabs"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0"
+            android:layout_marginStart="8dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_filter_1" />
+            app:srcCompat="@drawable/ic_filter_1"
+            android:contentDescription="@string/tabs" />
 
         <ImageView
             android:id="@+id/imageViewMore"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0"
+            android:layout_marginStart="8dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_more_vert" />
+            app:srcCompat="@drawable/ic_more_vert"
+            android:contentDescription="@string/more_options" />
     </LinearLayout>
 
     <LinearLayout
