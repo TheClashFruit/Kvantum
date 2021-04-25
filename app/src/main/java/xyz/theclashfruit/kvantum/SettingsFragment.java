@@ -1,5 +1,6 @@
 package xyz.theclashfruit.kvantum;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,12 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SettingsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +20,8 @@ public class SettingsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    LinearLayout linearForeground;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -56,9 +55,18 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View viewInflater = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        linearForeground = viewInflater.findViewById(R.id.linearForeground);
+
+        linearForeground.setBackground(new GradientDrawable() {
+            public GradientDrawable getIns(int a, int b) {
+                this.setCornerRadius(a); this.setColor(b);
+                return this;
+            }
+        }.getIns((int)16, 0xFFFFFFFF));
+
+        return viewInflater;
     }
 }

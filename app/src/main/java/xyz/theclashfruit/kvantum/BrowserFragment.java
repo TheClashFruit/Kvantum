@@ -30,11 +30,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BrowserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BrowserFragment extends Fragment {
 
     private static final String BROWSER_URL = "browserUrl";
