@@ -91,7 +91,7 @@ public class BrowserFragment extends Fragment {
             }
         }.getIns((int)8, 0xFF616161));
 
-        webView.loadUrl("https://start.duckduckgo.com");
+        webView.loadUrl(browserUrl);
 
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
