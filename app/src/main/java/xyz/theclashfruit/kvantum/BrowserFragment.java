@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 
+import androidx.core.view.MenuCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -161,15 +162,12 @@ public class BrowserFragment extends Fragment {
         });
 
         imageViewMore.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(getActivity().getApplicationContext(), imageViewMore);
+            PopupMenu optionsPopup = new PopupMenu(getActivity().getApplicationContext(), imageViewMore);
 
-            Menu menu = popup.getMenu();
-            menu.add("Bookmarks");
-            menu.add("History");
-            menu.add("Downloads");
-            menu.add("Desktop Site").setCheckable(true);
-            menu.add("Settings");
-            popup.setOnMenuItemClickListener(item -> {
+            optionsPopup.getMenuInflater().inflate(R.menu.options_menu, optionsPopup.getMenu());
+            MenuCompat.setGroupDividerEnabled(optionsPopup.getMenu(), true);
+
+            optionsPopup.setOnMenuItemClickListener(item -> {
                 switch (item.getTitle().toString()) {
                     case "Bookmarks":
 
@@ -188,7 +186,7 @@ public class BrowserFragment extends Fragment {
                 }
             });
 
-            popup.show();
+            optionsPopup.show();
         });
 
         return viewInflater;
