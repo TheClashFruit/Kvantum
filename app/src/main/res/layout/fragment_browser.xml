@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BrowserFragment"/>
+    android:orientation="vertical"
+    tools:context=".BrowserFragment">
+
+    <LinearLayout
+        android:id="@+id/linearActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#212121"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:id="@+id/linearUrl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#616161"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/imageViewLock"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="4dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_lock"
+                android:contentDescription="@string/https_lock" />
+
+            <EditText
+                android:id="@+id/editTextUrl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:hint="@string/enter_url"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#A3FFFFFF"
+                android:textSize="14sp"
+                tools:ignore="TextFields" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewTabs"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_filter_1"
+            android:contentDescription="@string/tabs" />
+
+        <ImageView
+            android:id="@+id/imageViewMore"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_more_vert"
+            android:contentDescription="@string/more_options" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <WebView
+            android:id="@+id/webview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

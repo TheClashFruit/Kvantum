@@ -1,12 +1,33 @@
 package xyz.theclashfruit.kvantum;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.SslErrorHandler;
+import android.webkit.URLUtil;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,50 +36,156 @@ import android.view.ViewGroup;
  */
 public class BrowserFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String BROWSER_URL = "browserUrl";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String browserUrl;
+
+    WebView webView;
+    EditText editTextUrl;
+    ImageView imageViewLock;
+    ImageView imageViewTabs;
+    ImageView imageViewMore;
+    LinearLayout linearUrl;
+    LinearLayout linearActionBar;
 
     public BrowserFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BrowserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BrowserFragment newInstance(String param1, String param2) {
-        BrowserFragment fragment = new BrowserFragment();
+    public static BrowserFragment newInstance(String browserUrl) {
+        BrowserFragment browserFragment = new BrowserFragment();
+
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        args.putString(BROWSER_URL, browserUrl);
+        browserFragment.setArguments(args);
+
+        return browserFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            browserUrl = getArguments().getString(BROWSER_URL);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_browser, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View viewInflater =  inflater.inflate(R.layout.fragment_browser, container, false);
+
+        webView = viewInflater.findViewById(R.id.webview1);
+        editTextUrl = viewInflater.findViewById(R.id.editTextUrl);
+        imageViewLock = viewInflater.findViewById(R.id.imageViewLock);
+        imageViewTabs = viewInflater.findViewById(R.id.imageViewTabs);
+        imageViewMore = viewInflater.findViewById(R.id.imageViewMore);
+        linearUrl = viewInflater.findViewById(R.id.linearUrl);
+        linearActionBar = viewInflater.findViewById(R.id.linearActionBar);
+
+        linearActionBar.setElevation(8f);
+        linearUrl.setBackground(new GradientDrawable() {
+            public GradientDrawable getIns(int a, int b) {
+                this.setCornerRadius(a); this.setColor(b);
+                return this;
+            }
+        }.getIns((int)8, 0xFF616161));
+
+        webView.loadUrl("https://start.duckduckgo.com");
+
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setDatabaseEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                editTextUrl.setText(url);
+
+                if(KvengineUtil.sslCheck(view)) {
+                    imageViewLock.setColorFilter(0xFF4CAF50);
+                } else {
+                    imageViewLock.setColorFilter(0xFFF44336);
+                }
+
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                editTextUrl.setText(url);
+
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                imageViewLock.setColorFilter(0xFFF44336);
+
+                super.onReceivedSslError(view, handler, error);
+            }
+        });
+
+        /*
+        webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            String cookies = CookieManager.getInstance().getCookie(url);
+            request.addRequestHeader("cookie", cookies);
+            request.addRequestHeader("User-Agent", userAgent);
+            request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
+
+            DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            manager.enqueue(request);
+        });
+        */
+
+        editTextUrl.setOnKeyListener((v, keyCode, event) -> {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                webView.loadUrl(editTextUrl.getText().toString());
+                return true;
+            }
+            return false;
+        });
+
+        imageViewTabs.setOnClickListener(v -> {
+            TabsFragment tabsFragment = TabsFragment.newInstance("a","b");
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            fragmentTransaction.replace(R.id.fragmentContainer, tabsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+
+        imageViewMore.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(new MainActivity(), imageViewMore);
+
+            Menu menu = popup.getMenu();
+            menu.add("Bookmarks");
+            menu.add("History");
+            menu.add("Downloads");
+            menu.add("Desktop Site").setCheckable(true);
+            menu.add("Settings");
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getTitle().toString()) {
+                    case "Bookmarks":
+
+                        return true;
+                    case "Settings":
+
+                        return true;
+                    default: return false;
+                }
+            });
+
+            popup.show();
+        });
+
+        return viewInflater;
     }
 }
