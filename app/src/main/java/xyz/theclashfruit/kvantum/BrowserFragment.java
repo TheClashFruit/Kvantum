@@ -128,7 +128,6 @@ public class BrowserFragment extends Fragment {
             }
         });
 
-        /*
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
             String cookies = CookieManager.getInstance().getCookie(url);
@@ -139,10 +138,9 @@ public class BrowserFragment extends Fragment {
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
 
-            DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager manager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
             manager.enqueue(request);
         });
-        */
 
         editTextUrl.setOnKeyListener((v, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -163,7 +161,7 @@ public class BrowserFragment extends Fragment {
         });
 
         imageViewMore.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(new MainActivity(), imageViewMore);
+            PopupMenu popup = new PopupMenu(getActivity().getApplicationContext(), imageViewMore);
 
             Menu menu = popup.getMenu();
             menu.add("Bookmarks");
@@ -177,6 +175,13 @@ public class BrowserFragment extends Fragment {
 
                         return true;
                     case "Settings":
+                        SettingsFragment settingsFragment = SettingsFragment.newInstance("a","b");
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                        fragmentTransaction.replace(R.id.fragmentContainer, settingsFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
 
                         return true;
                     default: return false;
