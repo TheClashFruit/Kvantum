@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         WebView webView = findViewById(R.id.webview1);
         EditText editTextUrl = findViewById(R.id.editTextUrl);
         ImageView imageViewLock = findViewById(R.id.imageViewLock);
+        ImageView imageViewTabs = findViewById(R.id.imageViewTabs);
         ImageView imageViewMore = findViewById(R.id.imageViewMore);
         LinearLayout linearUrl = findViewById(R.id.linearUrl);
         LinearLayout linearActionBar = findViewById(R.id.linearActionBar);
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+        /*
         imageViewMore.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(MainActivity.this, imageViewMore);
 
@@ -137,5 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
             popup.show();
         });
+        */
     }
 }
