@@ -50,6 +50,15 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/imageViewTabs"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="0"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_filter_1" />
+
+        <ImageView
             android:id="@+id/imageViewMore"
             android:layout_width="35dp"
             android:layout_height="35dp"
