@@ -21,7 +21,7 @@ public class SettingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    LinearLayout linearForeground;
+    LinearLayout serachEngineLinear;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -58,14 +58,17 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View viewInflater = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        linearForeground = viewInflater.findViewById(R.id.linearForeground);
+        serachEngineLinear = viewInflater.findViewById(R.id.serachEngineLinear);
 
-        linearForeground.setBackground(new GradientDrawable() {
+        serachEngineLinear.setBackground(new GradientDrawable() {
             public GradientDrawable getIns(int a, int b) {
                 this.setCornerRadius(a); this.setColor(b);
                 return this;
             }
         }.getIns((int)16, 0xFFFFFFFF));
+
+        getActivity().getWindow().setNavigationBarColor(0xFFFFFFFF);
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 
         return viewInflater;
     }

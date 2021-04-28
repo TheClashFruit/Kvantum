@@ -52,7 +52,9 @@ public class TabsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        getActivity().getWindow().setNavigationBarColor(0xFF212121);
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
         return inflater.inflate(R.layout.fragment_tabs, container, false);
     }
 }

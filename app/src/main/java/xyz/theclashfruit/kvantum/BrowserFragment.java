@@ -71,6 +71,9 @@ public class BrowserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View viewInflater =  inflater.inflate(R.layout.fragment_browser, container, false);
 
+        getActivity().getWindow().setNavigationBarColor(0xFF212121);
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
         webView = viewInflater.findViewById(R.id.webview1);
         editTextUrl = viewInflater.findViewById(R.id.editTextUrl);
         imageViewLock = viewInflater.findViewById(R.id.imageViewLock);

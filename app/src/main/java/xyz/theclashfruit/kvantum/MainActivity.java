@@ -45,7 +45,5 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentTransaction.replace(R.id.fragmentContainer, browserFragment);
         fragmentTransaction.commit();
-
-        this.getWindow().setNavigationBarColor(0xFF212121);
     }
 }
