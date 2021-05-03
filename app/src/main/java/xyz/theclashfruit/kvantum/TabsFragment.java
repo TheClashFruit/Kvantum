@@ -2,11 +2,18 @@ package xyz.theclashfruit.kvantum;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.service.autofill.Dataset;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 public class TabsFragment extends Fragment {
 
@@ -18,6 +25,8 @@ public class TabsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView recyclerView;
 
     public TabsFragment() {
         // Required empty public constructor
@@ -52,9 +61,27 @@ public class TabsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View viewInflater = inflater.inflate(R.layout.fragment_tabs, container, false);
+
+        recyclerView = viewInflater.findViewById(R.id.recyclerView);
+
+        ArrayList<TabItem> tabs = new ArrayList<TabItem>();
+
+        tabs.add(new TabItem("kvantum://home"));
+        tabs.add(new TabItem("kvantum://settings"));
+        tabs.add(new TabItem("kvantum://extensions"));
+        tabs.add(new TabItem("kvantum://flags"));
+        tabs.add(new TabItem("https://theclashfruit.ga"));
+        tabs.add(new TabItem("http://github.com"));
+        tabs.add(new TabItem("https://discord.com"));
+        tabs.add(new TabItem("kvantum://about"));
+
         getActivity().getWindow().setNavigationBarColor(0xFF212121);
         getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
-        return inflater.inflate(R.layout.fragment_tabs, container, false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new TabsAdapter(tabs));
+
+        return viewInflater;
     }
 }
