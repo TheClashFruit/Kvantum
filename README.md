@@ -5,8 +5,11 @@ Kvantum is a browser that is focusing on privacy, currently in very early stage.
 
 
 ## To-Do
-<ul>
-    <li>
-        <input type="checkbox" disabled />
-    </li>
-</ul>
+
+- [ ] Tabs
+- [ ] History
+- [ ] Extensions
+- [ ] Built-in Ad-block
+- [ ] Downloads List
+- [ ] Settings
+- [x] Use Fragments
