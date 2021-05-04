@@ -1,1 +1,1 @@
-# Kvantum
+<h1 align="left">TheClashFruit ✨</h1> <img src="https://raw.githubusercontent.com/TheClashFruit/Kvantum/main/app/src/main/ic_launcher-playstore.png" align="right" height="200px">
