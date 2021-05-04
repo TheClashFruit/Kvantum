@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
