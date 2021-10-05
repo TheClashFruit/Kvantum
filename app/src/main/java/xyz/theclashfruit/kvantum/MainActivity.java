@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BrowserFragment browserFragment = BrowserFragment.newInstance("https://start.duckduckgo.com");
+        BrowserFragment browserFragment = BrowserFragment.newInstance("https://start.duckduckgo.com", new KvengineInterface(MainActivity.this));
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

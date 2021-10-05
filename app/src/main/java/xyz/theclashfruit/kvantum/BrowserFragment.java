@@ -32,6 +32,8 @@ import android.widget.PopupMenu;
 public class BrowserFragment extends Fragment {
 
     private static final String BROWSER_URL = "browserUrl";
+    private static
+    KvengineInterface KvengineInterface = null;
 
     private String browserUrl;
 
@@ -47,8 +49,10 @@ public class BrowserFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BrowserFragment newInstance(String browserUrl) {
+    public static BrowserFragment newInstance(String browserUrl, KvengineInterface jsInterface) {
         BrowserFragment browserFragment = new BrowserFragment();
+
+        KvengineInterface = jsInterface;
 
         Bundle args = new Bundle();
         args.putString(BROWSER_URL, browserUrl);
@@ -96,6 +100,8 @@ public class BrowserFragment extends Fragment {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setDatabaseEnabled(true);
+
+        webView.addJavascriptInterface(KvengineInterface, "Kvantum");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

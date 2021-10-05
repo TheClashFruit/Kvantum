@@ -1,5 +1,6 @@
 package xyz.theclashfruit.kvantum;
 
+import android.content.Context;
 import android.webkit.WebView;
 
 public class KvengineUtil {
