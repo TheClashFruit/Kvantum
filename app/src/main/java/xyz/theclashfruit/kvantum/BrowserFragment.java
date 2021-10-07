@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
@@ -32,8 +33,6 @@ import android.widget.PopupMenu;
 public class BrowserFragment extends Fragment {
 
     private static final String BROWSER_URL = "browserUrl";
-    private static
-    KvengineInterface KvengineInterface = null;
 
     private String browserUrl;
 
@@ -49,10 +48,8 @@ public class BrowserFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BrowserFragment newInstance(String browserUrl, KvengineInterface jsInterface) {
+    public static BrowserFragment newInstance(String browserUrl) {
         BrowserFragment browserFragment = new BrowserFragment();
-
-        KvengineInterface = jsInterface;
 
         Bundle args = new Bundle();
         args.putString(BROWSER_URL, browserUrl);
@@ -101,7 +98,29 @@ public class BrowserFragment extends Fragment {
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setDatabaseEnabled(true);
 
-        webView.addJavascriptInterface(KvengineInterface, "Kvantum");
+        class KvengineInterface {
+
+            KvengineInterface(View pViewInflater) {
+
+            }
+
+            @JavascriptInterface
+            public String getVersion() {
+                return "1.1";
+            }
+
+            @JavascriptInterface
+            public void hideToolBar() {
+                itemVisibility(false);
+            }
+
+            @JavascriptInterface
+            public void showToolBar() {
+                itemVisibility(true);
+            }
+        }
+
+        webView.addJavascriptInterface(new KvengineInterface(viewInflater), "Kvantum");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -193,5 +212,13 @@ public class BrowserFragment extends Fragment {
         });
 
         return viewInflater;
+    }
+
+    public void itemVisibility(Boolean isVisible) {
+        if(isVisible) {
+            linearActionBar.setVisibility(View.VISIBLE);
+        } else {
+            linearActionBar.setVisibility(View.GONE);
+        }
     }
 }
